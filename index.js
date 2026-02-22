@@ -7,6 +7,20 @@ const TelegramBot = require("node-telegram-bot-api");
 
 const TOKEN = process.env.TOKEN;
 const bot = new TelegramBot(TOKEN, { polling: true });
+// ===============================
+// Set Telegram Menu Commands (Left Popup Menu)
+// ===============================
+
+bot.setMyCommands([
+    { command: "start", description: "Start the bot" },
+    { command: "freevip", description: "View Free VIP" },
+    { command: "paidvip", description: "View Paid VIP" },
+    { command: "mentorship", description: "View Mentorship Program" },
+    { command: "tours", description: "View Tour Dates" },
+    { command: "support", description: "Get Support" }
+]);
+
+console.log("Menu commands set ✅");
 
 console.log("MarketGod Academy Bot Running 🚀");
 
@@ -48,13 +62,36 @@ function backToursKeyboard() {
 // ===============================
 
 bot.onText(/\/start/, (msg) => {
+    // ===============================
+// Command Shortcuts (Popup Menu Commands)
+// ===============================
+
+bot.onText(/\/freevip/, (msg) => {
+    bot.emit("message", { chat: msg.chat, text: "📊 Free VIP" });
+});
+
+bot.onText(/\/paidvip/, (msg) => {
+    bot.emit("message", { chat: msg.chat, text: "💎 Paid VIP" });
+});
+
+bot.onText(/\/mentorship/, (msg) => {
+    bot.emit("message", { chat: msg.chat, text: "🎓 Mentorship" });
+});
+
+bot.onText(/\/tours/, (msg) => {
+    bot.emit("message", { chat: msg.chat, text: "📅 Tour Dates" });
+});
+
+bot.onText(/\/support/, (msg) => {
+    bot.emit("message", { chat: msg.chat, text: "🛠 Get Support" });
+});
     const chatId = msg.chat.id;
     const introText = `
 🔥 Welcome to MarketGod Academy 🔥
 
 We help traders master the Forex market with actionable signals, mentorship, and a strong community.
 
-Learn more: https://www.marketgodacademy.com/plans
+Learn more: https://www.marketgodacademy.com/
 
 Get started by choosing an option below:
 `;
@@ -88,7 +125,7 @@ Real-time, high-probability signals delivered straight to your phone. Perfect fo
             await bot.sendMessage(chatId, "Click below to join Free VIP:", {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "🤖 Join Free VIP Bot", url: "https://t.me/OtherFreeVIPBot" }]
+                        [{ text: "🤖 Join Free VIP Bot", url: "https://t.me/Livetradewithmarketgodbot" }]
                     ]
                 }
             });
@@ -134,7 +171,7 @@ Click below to complete your Paid VIP subscription:
 `, {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "🤖 Complete Subscription", url: "https://t.me/YourPaidVIPBot" }]
+                        [{ text: "🤖 Complete Subscription", url: "https://t.me/paymarketgodbot" }]
                     ]
                 }
             });
@@ -160,7 +197,7 @@ What you will get:
                 parse_mode: "HTML",
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "🤖 Join MarketGod Mentorship", url: "https://t.me/YourMentorshipBot" }]
+                        [{ text: "🤖 Join MarketGod Mentorship", url: "https://t.me/paymarketgodbot" }]
                     ]
                 }
             });
@@ -173,7 +210,7 @@ What you will get:
 
         case "✅ Completed":
             await bot.sendPhoto(chatId,
-                "https://res.cloudinary.com/dzqdfaghg/image/upload/v1763522352/SnapInsta.to_511469271_18512807728003421_2788928110292631837_n_shzro3.jpg",
+                "https://res.cloudinary.com/dzqdfaghg/image/upload/v1771783834/d45de409-00cf-4b60-8f90-4d84964836aa.png",
                 {
                     caption: `
 🙏 Thank you to all traders who attended our previous Forex Tour seminars! Your dedication inspires us.
@@ -196,7 +233,7 @@ Your participation makes the journey meaningful. We couldn’t do this without y
             break;
 
         case "📅 Upcoming":
-            await bot.sendPhoto(chatId, "https://res.cloudinary.com/dzqdfaghg/image/upload/v1763522352/SnapInsta.to_511469271_18512807728003421_2788928110292631837_n_shzro3.jpg", {
+            await bot.sendPhoto(chatId, "https://res.cloudinary.com/dzqdfaghg/image/upload/v1771486217/kumasi_ocr0pl.webp", {
                 caption: `🔥 <b>The Journey Continues</b> 🔥
 
 Every year, he shows up. Every year, traders level up.
@@ -223,7 +260,7 @@ If you’ll be attending the tour, make sure you join @livetradewithmarketgodbot
             await bot.sendMessage(chatId, "Secure your spot for the upcoming tour:", {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "🔥 Secure Your Spot", url: "https://t.me/livetradewithmarketgodbot" }]
+                        [{ text: "🔥 Secure Your Spot", url: "https://mainstack.com/s/marketgod" }]
                     ]
                 }
             });
@@ -249,7 +286,7 @@ If you’ll be attending the tour, make sure you join @livetradewithmarketgodbot
             await bot.sendMessage(chatId, "Click below to join our Free Community:", {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "🌐 Join Free Community", url: "https://t.me/yourfreechannel" }]
+                        [{ text: "🌐 Join Free Community", url: "https://t.me/marketgodcommunity" }]
                     ]
                 }
             });
@@ -262,11 +299,11 @@ If you’ll be attending the tour, make sure you join @livetradewithmarketgodbot
 
 Need help or want to reach out? Connect with us through any of the following channels:
 
-• Telegram Support: [Click Here](https://t.me/yourSupportHandle)  
-• WhatsApp Support: [Click Here](https://wa.me/yourWhatsAppNumber)  
-• Email: [support@marketgodacademy.com](mailto:support@marketgodacademy.com)  
-• Instagram: [@marketgodacademy](https://www.instagram.com/marketgodacademy)  
-• Facebook: [MarketGod Academy](https://www.facebook.com/marketgodacademy)  
+• Telegram Support: [Click Here](https://t.me/delatrades)  
+• WhatsApp Support: [Click Here](https://wa.me/+233599002863)  
+• Email: [Click Here](mailto:support@marketgodacademy.com)  
+• Instagram: [Click Here](https://www.instagram.com/eyram_dela/)  
+• Facebook: [Click Here](https://www.facebook.com/eyram.akpey?_rdc=1&_rdr#)  
 
 We are here to assist you 24/7. Your success is our priority! 🚀
 `;
