@@ -4,6 +4,16 @@
 
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
+const http = require("http");
+
+// Initialize a dummy server to keep the platform happy (binds to PORT)
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("MarketGod Bot is running!");
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 const TOKEN = process.env.TOKEN;
 const bot = new TelegramBot(TOKEN, { polling: true });
@@ -61,11 +71,9 @@ function backToursKeyboard() {
 // /start Command
 // ===============================
 
-bot.onText(/\/start/, (msg) => {
-    // ===============================
+// ===============================
 // Command Shortcuts (Popup Menu Commands)
 // ===============================
-
 bot.onText(/\/freevip/, (msg) => {
     bot.emit("message", { chat: msg.chat, text: "📊 Free VIP" });
 });
@@ -85,6 +93,8 @@ bot.onText(/\/tours/, (msg) => {
 bot.onText(/\/support/, (msg) => {
     bot.emit("message", { chat: msg.chat, text: "🛠 Get Support" });
 });
+
+bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const introText = `
 🔥 Welcome to MarketGod Academy 🔥
